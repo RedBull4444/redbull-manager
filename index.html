@@ -478,7 +478,7 @@
 </head>
 <body>
     <div class="header">
-        <h1❄️ RedBull Manager by Kaan</h1>
+        <h1>❄️ RedBull Manager by Kaan</h1>
     </div>
 
     <div class="stats">
@@ -507,6 +507,14 @@
         <button class="tab-btn" onclick="switchTab('storage')">Lager</button>
         <button class="tab-btn" onclick="switchTab('sales')">Verkäufe</button>
         <button class="tab-btn" onclick="switchTab('customers')">Kunden</button>
+    </div>
+
+    <!-- RESET BUTTON -->
+    <div style="text-align:center; margin: 10px 0 20px 0;">
+        <button onclick="resetApp()"
+            style="padding:12px 20px; background:#ef4444; color:white; border:none; border-radius:10px; font-size:15px; font-weight:700; box-shadow:0 3px 6px rgba(0,0,0,0.25);">
+            🔄 Alles zurücksetzen
+        </button>
     </div>
 
     <div id="fridgeTab" class="tab-content active">
@@ -738,7 +746,12 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.querySelectorAll(`.tab-btn`).forEach(btn => {
+                if (btn.getAttribute('onclick') === `switchTab('${tab}')`) {
+                    btn.classList.add('active');
+                }
+            });
+
             document.getElementById(tab + 'Tab').classList.add('active');
         }
 
@@ -960,6 +973,17 @@
             document.getElementById('totalMoney').textContent = (soldCans.length * 2).toFixed(2) + ' €';
             document.getElementById('paidMoney').textContent = (paidCans.length * 2).toFixed(2) + ' €';
             document.getElementById('unpaidMoney').textContent = (unpaidCans.length * 2).toFixed(2) + ' €';
+        }
+
+        // RESET-FUNKTION
+        function resetApp() {
+            if (confirm("Willst du WIRKLICH alles löschen? (Lager, Kühlschrank, Verkäufe, Kunden)")) {
+                localStorage.removeItem('redbullCans');
+                localStorage.removeItem('redbullCustomers');
+                cans = [];
+                customers = [];
+                render();
+            }
         }
 
         function render() {
