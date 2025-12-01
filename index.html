@@ -977,14 +977,21 @@
 
         // RESET-FUNKTION
         function resetApp() {
-            if (confirm("Willst du WIRKLICH alles löschen? (Lager, Kühlschrank, Verkäufe, Kunden)")) {
-                localStorage.removeItem('redbullCans');
-                localStorage.removeItem('redbullCustomers');
-                cans = [];
-                customers = [];
-                render();
-            }
-        }
+    if (confirm("Willst du WIRKLICH alles zurücksetzen? (Kühlschrank, Lager, Verkäufe werden gelöscht – Kunden & Schulden bleiben)")) {
+
+        // Nur die Dosen/Verkäufe zurücksetzen
+        localStorage.removeItem('redbullCans');
+
+        // Kunden bleiben erhalten!
+        // customers = customers (NICHT löschen!)
+
+        // Cans-Array leeren, aber Kunden behalten
+        cans = [];
+
+        // Neu rendern
+        render();
+    }
+}
 
         function render() {
             renderSlots('normal');
@@ -1000,3 +1007,4 @@
     </script>
 </body>
 </html>
+
